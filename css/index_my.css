@@ -4,10 +4,6 @@ input{
     outline: none;
 }
 .phone{
-    /* width: 340px; */
-    /* width: 375px;
-    height: 667px; */
-    
     width: 300px;
     height: 533.6px;
     margin: 0 auto;
@@ -16,13 +12,10 @@ input{
     box-shadow: rgba(32, 32, 32, 0.116) 0px 0px 5px 3px;
     display: block;
     overflow: hidden;
-    margin-bottom: 50px;
 }
 .phone .screen{
     width: 100%;
     height: 100%;
-    /* width: 300px;
-    height: 533.6px; */
     background: rgb(255, 255, 255);
     border-radius: 2px;
     overflow-y: auto;
@@ -40,7 +33,6 @@ input{
 .set_up>div>ul>li>div{
     width: calc(100% - 80px);
     height: 30px;
-    /* border-bottom: 1px solid rgb(168, 168, 168); */
 }
 .set_up>div>ul>li>p,.set_up>div>ul>li>div{
     display: block;
@@ -103,13 +95,10 @@ input{
 #suspension{
     width: 300px;
     height: auto;
-    /* height: 100px; */
     position: fixed;
     z-index: 9999;
-    /* background: orchid; */
     left: 0;
     top: 0;
-    /* cursor: move; */
 }
 #getColor{
     width: 100%;
@@ -127,4 +116,13 @@ input{
     right:0;
     bottom: 0;
     margin: auto;
+}
+#code{
+    width: 100%;
+    height: 100%;
+    resize: none;
+    border:0;
+}
+.box-body.section{
+    height: 700px;
 }
