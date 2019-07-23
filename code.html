@@ -1,0 +1,157 @@
+    <!--页面html代码-->
+    <!DOCTYPE html>
+    <html lang="zh-CN">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="author" content="liyanan" />
+        <title>html标签格式化</title>
+        <!--页面元素样式-->
+        <style>
+            body {
+                width: 1200px;
+                margin: 0 auto;
+                font-family: Microsoft YaHei;
+                font-size: 14px;
+            }
+
+            a {
+                text-decoration: none;
+            }
+
+            textarea {
+                width: 100%;
+                height: 300px;
+            }
+
+            #btn,
+            #select {
+                display: inline-block;
+                width: 100px;
+                height: 30px;
+                line-height: 30px;
+                color: #fff;
+                background-color: #FF863E;
+                text-align: center;
+                margin: 20px 0 0 0;
+            }
+
+            #btn:hover,
+            #select:hover {
+                background-color: #FF6100;
+            }
+        </style>
+    </head>
+
+    <body>
+        <p>贴入要格式化的HTML代码：</p>
+        <!--这里是贴入需要格式化的html代码的文本域-->
+        <textarea id="origin"></textarea>
+        <br/>
+        <!--点击“开始格式化”按钮对代码进行格式化-->
+        <a id="btn" href="javascript:;">开始格式化</a>
+        <!--点击“复制按钮”会自动复制格式化后的代码至剪贴板-->
+        <a id="select" href="javascript:;">复制</a>
+        <p>格式化结果如下：</p>
+        <!--这里显示格式化后的代码的文本域-->
+        <textarea id="result"></textarea>
+    </body>
+    
+    <!-- jQuery 2.0.2 -->
+    <script src="js/jquery.min.js"></script>
+    <script>
+        $(function () {
+            //开始格式化点击事件
+            $('#btn').click(function () {
+                //获取贴入文本域的需要格式化的html代码
+                var text = $('#origin').val();
+                //执行格式化函数对文本进行格式化
+                var fmt = format(text);
+                //将格式化后的代码放入文本域进行显示
+                $('#result').val(fmt);
+            });
+            //复制按钮点击事件
+            $('#select').click(function () {
+                //全选文本域中内容
+                $('#result').select();
+                //将选中的文本内容粘贴至系统剪贴板
+                document.execCommand("Copy");
+                //给用户反馈“代码已复制”提示
+                alert("已复制好，可贴粘。");
+            });
+            //文本框获得焦点事件
+            $('#origin,#result').focus(function () {
+                //全选文本域内文本内容以便对文本内容进行删除或复制操作
+                $(this).select();
+            });
+            //代码格式化函数，strs为传入的需要格式化代码的字符串
+            function format(strs) {
+                //声明left变量用于存放html标签中左尖括号（‘<’）位置
+                var left = null;
+                //声明right变量用于存放html标签中右尖括号（‘<’）位置
+                var right = null;
+                //声明str变量，用于存放格式化后的代码字符串
+                var str = '';
+                //存放html代码所进所用的空格
+                var blank = '\t';
+                //存放若干个blank变量，用于控制代码缩进的深度
+                var fmt = [];
+                //对需要格式化的代码字符串进行遍历
+                for (var i = 0; i < strs.length; i++) {
+                    //发现左尖括号后将其位置记录在left变量上
+                    if (strs[i] == '<') {
+                        left = i;
+                    } else if (strs[i] == '>') {
+                        //发现右尖括号后将其记录在right变量上
+                        right = i;
+                    }
+                    //当做尖括号右尖括号都记录了一个位置后，说明二者之间的内容为代码的一行
+                    if (typeof left == 'number' && typeof right == 'number') {
+                        //判断字符串左尖括号后是否为‘/’，如果满足，表明该行代码为双标签的闭合标签
+                        if (strs[left + 1] == '/') {
+                            //对数组中的空格做出栈，确保代码缩进正确
+                            fmt.pop();
+                            //将该行代码放入str变量中
+                            str += fmt.join('') + strs.slice(left, right + 1);
+                            //判断字符串右尖括号前一位是否为‘/’，如满足，表明该标签为严格闭合的单标签
+                        } else if (strs[right - 1] == '/') {
+                            str += fmt.join('') + strs.slice(left, right + 1);
+                            //判断字符串开头是否包含input/imig/hr/br/link/meta等字母，用于屏蔽非严格未闭合的单标签
+                        } else if (strs.slice(left, right).search(/\<input|\<img|\<hr|\<br|\<link|\<meta/) != -1) {
+                            str += fmt.join('') + strs.slice(left, right + 1);
+                            //对双标签的左标签进行的操作
+                        } else {
+                            str += fmt.join('') + strs.slice(left, right + 1);
+                            //向数组中堆入一个空格，确保下一行双标签的左标签的缩进正确
+                            fmt.push(blank);
+                        }
+                        //对right位置后的字符串进行遍历
+                        for (var j = right; j < strs.length; j++) {
+                            //查找right位置后，第一个左尖括号的位置，二者之间的内容即为代码中的文本内容
+                            if (strs[j] == '<') {
+                                //去掉文本中多余的空格
+                                var s = strs.slice(right + 1, j).replace(/\s*/g, '');
+                                if (s) {
+                                    //当文本中去掉空格后任然有内容，则将文本拼入str变量进行存储
+                                    str += s;
+                                }
+                                break;
+                            }
+                        }
+                        //每次获得一次左右尖括号的位置后，即得到了一行代码，为代码做换行处理
+                        str += '\n';
+                        //重置left、right的值，用于for循环的下次存储做右尖括号的位置
+                        left = null;
+                        right = null;
+                    }
+
+                }
+                //返回得到的格式化完成的html代码字符串
+                return str;
+            }
+
+        })
+    </script>
+
+    </html>
+</span>

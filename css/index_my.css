@@ -1,0 +1,130 @@
+input{
+    background: transparent;
+    color:#8c8d8f;
+    outline: none;
+}
+.phone{
+    /* width: 340px; */
+    /* width: 375px;
+    height: 667px; */
+    
+    width: 300px;
+    height: 533.6px;
+    margin: 0 auto;
+    background: rgb(255, 255, 255);
+    border-radius: 2px;
+    box-shadow: rgba(32, 32, 32, 0.116) 0px 0px 5px 3px;
+    display: block;
+    overflow: hidden;
+    margin-bottom: 50px;
+}
+.phone .screen{
+    width: 100%;
+    height: 100%;
+    /* width: 300px;
+    height: 533.6px; */
+    background: rgb(255, 255, 255);
+    border-radius: 2px;
+    overflow-y: auto;
+}
+.phone .screen::-webkit-scrollbar {
+    display:none;
+}
+.set_up>div>ul{
+    list-style-type:none;
+}
+.set_up>div>ul>li{
+    height: 30px;
+    margin-bottom: 10px;
+}
+.set_up>div>ul>li>div{
+    width: calc(100% - 80px);
+    height: 30px;
+    /* border-bottom: 1px solid rgb(168, 168, 168); */
+}
+.set_up>div>ul>li>p,.set_up>div>ul>li>div{
+    display: block;
+    float: left;
+    line-height: 30px;
+}
+.set_up>div>ul>li>p{
+    width: 70px;
+    text-align: justify;
+}
+.set_up>div>ul>li>div>input{
+    width: 100px;
+    height: 30px;
+    border: none;
+    margin-right: 10px;
+    border:1px solid #e5e5e5;
+    border-radius:5px;
+    padding: 0 5px;
+}
+.nice-select{
+    position: relative;
+    background: #fff url(images/a2.jpg) no-repeat right center;
+    background-size:18px;
+    width:47%;
+    float:left;
+    
+    height:44px;
+    line-height:44px;
+}
+
+.nice-select ul{
+    width: 100px;
+    display: none;
+    position: absolute;
+    overflow: hidden;
+    background-color: #fff;
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid #b9bcbf;
+    z-index: 9999;
+    border-radius:5px;
+    list-style-type: none;
+    padding-left: 0;
+}
+.nice-select ul li{
+    padding-left: 5px;
+}
+.nice-select ul li:hover{
+    background:#f8f4f4;
+}
+.styleList{
+    width: 300px;
+    margin:0 auto;
+}
+.styleList>div{
+    width: 100%;
+    cursor: move;
+}
+
+#suspension{
+    width: 300px;
+    height: auto;
+    /* height: 100px; */
+    position: fixed;
+    z-index: 9999;
+    /* background: orchid; */
+    left: 0;
+    top: 0;
+    /* cursor: move; */
+}
+#getColor{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #ffffff73;
+    z-index: 9999;
+}
+#picker{
+    position: absolute;
+    top:0;
+    left: 0;
+    right:0;
+    bottom: 0;
+    margin: auto;
+}
